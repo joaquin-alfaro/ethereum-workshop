@@ -90,4 +90,8 @@ contract TransferToken {
 
         emit Transfer(from, to, amount);
     }
+
+    function getSummary() public view returns(uint256, string memory, string memory) {
+            return (_datetime, _origin, _destination);
+    }
 }

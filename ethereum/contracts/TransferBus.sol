@@ -32,6 +32,8 @@ contract TransferBus {
     }
 
     constructor (string memory make, string memory model, string memory plate, uint8 seats) {
+        _owner = payable(msg.sender);
+
         _make = make;
         _model = model;
         _plate = plate;
@@ -54,5 +56,13 @@ contract TransferBus {
         require(msg.value == amount, "Not enough funds");
 
         TransferToken(schedule).transfer(msg.sender, units);
+    }
+
+    function getSchedule() public view returns (address[] memory) {
+        return _schedule;
+    }
+
+    function getPrice(address transfer) public view returns (uint256) {
+        return _price[transfer];
     }
 }
