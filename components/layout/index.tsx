@@ -8,11 +8,11 @@ interface LayoutType {
 }
 function Layout({ children, title, description }: LayoutType): JSX.Element {
     return (
-        <div className='container'>
+        <div>
             <Header title={title} description={description}/>
             <main>
                 <Navbar />
-                <div className='container'>
+                <div className='container' style={{paddingTop: '8rem'}}>
                     {children}
                 </div>
             </main>

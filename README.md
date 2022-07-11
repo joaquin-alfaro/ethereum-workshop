@@ -4,6 +4,8 @@ Dapp to manage transfers of travellers and renting of buses.
 ## Requirements
 - Plugin *Solidity of Juan Blanco* of Visual Studio Code
 - Plugin *Cucumber (Gherkin) Full Support of Alexander Krechik* of Visual Studio Code
+- Create account in Infura and a project for a testnet (Rinkeby)
+- Create account in nft.storage
 
 ## Procedure to create the project
 
@@ -18,7 +20,7 @@ yarn add @openzeppelin/contracts ganache solc web3 ts-node typescript @cucumber/
 
 ### 3. Add dependencies to develop UI with smart contracts
 ```bash
-yarn add react-bootstrap bootstrap @metamask/onboarding
+yarn add react-bootstrap bootstrap @metamask/onboarding net web3
 yarn add sass --dev
 ```
 
@@ -39,7 +41,7 @@ yarn ethereum:build
 yarn ethereum:test
 ```
 
-## FRONT
+## WEB APP
 ### Install
 ```bash
 yarn install
@@ -57,6 +59,18 @@ yarn build
 yarn start
 ```
 
+## Launch ethereum node locally
+It is provided a **docker-compose** to launch an ethereum node locally.  
+
+The node uses the implementation of [Hyperledger Besu](https://besu.hyperledger.org/en/stable/HowTo/Get-Started/Installation-Options/Run-Docker-Image/) and listens requests on port **8545**  
+  
+It can be used the following account for testing:  
+**publicKey**  
+0xfe3b557e8fb62b89f4916b721be55ceb828dbd73  
+**privateKey**  8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63  
+```bash
+docker compose up
+```
 ## Caveats
 ### Compilation errors when executing tests
 ```

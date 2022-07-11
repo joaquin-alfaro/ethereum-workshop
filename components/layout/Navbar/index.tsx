@@ -30,7 +30,7 @@ const Navbar = () => {
         collapseOnSelect
         expand='md'
         fixed='top'
-        className='bg-white px-md-5'
+        className='border bg-white px-md-5'
       >
         <Container fluid>
           <NavbarBs.Brand href='/'>

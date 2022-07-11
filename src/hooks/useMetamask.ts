@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 declare let window: any;
+import { useEffect, useState } from 'react'
 
 interface useMetamaskReturnType {
     isInstalled: boolean
@@ -8,7 +8,7 @@ interface useMetamaskReturnType {
 }
 const useMetamask = (): useMetamaskReturnType => {
     const [isInstalled, setIsInstalled] = useState(false)
-    const [accounts, setAccounts] = useState()
+    const [accounts, setAccounts] = useState<Array<any>>([])
 
     useEffect(() => {
         if (isInstalled) {
