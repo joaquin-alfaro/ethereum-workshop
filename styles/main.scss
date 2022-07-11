@@ -1,0 +1,38 @@
+
+/* Bootstrap - Theme
+-------------------------------------------------- */
+// Colors
+$primary: #371b5a;
+$secondary: rgb(119, 118, 118);
+$white: #ffffff;
+
+// Navbar
+$navbar-dark-color:                 rgba($white, 1) !default;
+$navbar-dark-hover-color:           rgba($white, .75) !default;
+$navbar-dark-active-color:          $white !default;
+$navbar-dark-disabled-color:        rgba($white, .25) !default;
+$navbar-dark-toggler-icon-bg:       url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-dark-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>") !default;
+$navbar-dark-toggler-border-color:  rgba($white, .1) !default;
+
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-text {
+    @extend h4;
+}
+
+/* Fonts
+-------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+    color: #2e2d2c !important;
+}
+
+h1, h2, h3, h4, h5 {
+    color: #2e2d2c;
+}
+
+h1 {
+    font-weight: 700;
+}
