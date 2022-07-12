@@ -20,7 +20,7 @@ yarn add @openzeppelin/contracts ganache solc web3 ts-node typescript @cucumber/
 
 ### 3. Add dependencies to develop UI with smart contracts
 ```bash
-yarn add react-bootstrap bootstrap @metamask/onboarding net web3
+yarn add react-bootstrap bootstrap @metamask/onboarding net web3 nft.storage
 yarn add sass --dev
 ```
 

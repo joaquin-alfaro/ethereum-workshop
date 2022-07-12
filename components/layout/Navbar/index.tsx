@@ -34,7 +34,7 @@ const Navbar = () => {
       >
         <Container fluid>
           <NavbarBs.Brand href='/'>
-            <h1>Fangio Buses</h1>
+            <h1>Transfers Dapp</h1>
           </NavbarBs.Brand>
           <div className='d-flex flex-row order-2 order-md-3 align-items-center'>
             <Nav.Item>
@@ -52,6 +52,10 @@ const Navbar = () => {
             <NavbarBs.Text>|</NavbarBs.Text>
             <NavbarBs.Text>
               <Nav.Link href='/tickets'>Tickets</Nav.Link>
+            </NavbarBs.Text>
+            <NavbarBs.Text>|</NavbarBs.Text>
+            <NavbarBs.Text>
+              <Nav.Link href='/rent'>Rent</Nav.Link>
             </NavbarBs.Text>
           </NavbarBs.Collapse>
         </Container>

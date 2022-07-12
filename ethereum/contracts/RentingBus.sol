@@ -105,4 +105,8 @@ contract RentingBus {
     function _exists(uint256 tokenId) internal view virtual returns (bool) {
         return _owners[tokenId] != address(0);
     }
+
+    function summary() public view returns (string memory, uint256) {
+        return (_plate, _tokenIds.current());
+    }
 }

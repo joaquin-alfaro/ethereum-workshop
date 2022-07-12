@@ -7,8 +7,8 @@ interface HeaderPropsType {
 export default function Header({ title, description }: HeaderPropsType) {
     return (
         <Head>
-            <title>{title ?? 'Fangio buses'}</title>
-            <meta name="description" content={description ?? 'Dapp for Fangio buses'} />
+            <title>{title ?? 'Transfers Dapp'}</title>
+            <meta name="description" content={description ?? 'Transfers Dapp'} />
             <link rel="icon" href="/favicon.ico" />
         </Head>
     )
