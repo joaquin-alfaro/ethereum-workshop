@@ -1,9 +1,11 @@
 import { Navbar as NavbarBs, Nav, Container, Button } from 'react-bootstrap'
 import useMetamask from '../../../src/hooks/useMetamask';
 import MetaMaskOnboarding from '@metamask/onboarding'
+import Link from 'next/link';
 
 const LoginButton = () => {
   const { accounts, isInstalled: isMetamask, connect } = useMetamask()
+  
   if (!isMetamask) {
     return (
       <Button size='lg' onClick={ () => {const metamaskOnBoarding = new MetaMaskOnboarding(); metamaskOnBoarding.startOnboarding()}}>
@@ -11,6 +13,7 @@ const LoginButton = () => {
       </Button>
     )
   }
+
   const isLogged = accounts?.length > 0
   if (!isLogged) {
     return (
@@ -21,7 +24,10 @@ const LoginButton = () => {
   }
 
   return (
-    <h5 className='text-muted'>{`${accounts[0].slice(0, 5)}...${accounts[0].slice(-4)}`}</h5>
+    <Link href='/account'>
+      <a style={{textDecoration: 'none'}}><h5 className='text-muted'>{`${accounts[0].slice(0, 5)}...${accounts[0].slice(-4)}`}</h5></a>
+    </Link>
+    
   )
 }
 const Navbar = () => {
@@ -47,11 +53,7 @@ const Navbar = () => {
             className='justify-content-end order-3 order-md-2'
           >
             <NavbarBs.Text>
-              <Nav.Link href='/bus'>Buses</Nav.Link>
-            </NavbarBs.Text>
-            <NavbarBs.Text>|</NavbarBs.Text>
-            <NavbarBs.Text>
-              <Nav.Link href='/tickets'>Tickets</Nav.Link>
+              <Nav.Link href='/bus'>Transfers</Nav.Link>
             </NavbarBs.Text>
             <NavbarBs.Text>|</NavbarBs.Text>
             <NavbarBs.Text>
