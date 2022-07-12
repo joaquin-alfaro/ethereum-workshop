@@ -14,7 +14,6 @@ contract TransferToken {
     string private _origin; // Origin
     string private _destination; // Destination
 
-
     /**
      * @dev Emitted when `value` tokens are moved from one account (`from`) to
      * another (`to`).

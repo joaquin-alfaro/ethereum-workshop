@@ -63,10 +63,10 @@ When('{string} schedules the transfer {string} to {string} at {string} at {float
 Then('transfer {string} to {string} at {string} for {float} ETH is scheduled for the Bus {string}', async function (origin: string, destination: string, datetime: string, price: number, _plate: string) {
     // Get the timetable/schedule of transfers of the bus (list of tokens)
     const {busContract} = context
-    const schedule = await busContract.methods.getSchedule().call()
+    const timetable = await busContract.methods.getTimetable().call()
 
     // Get the address of the transfer contract (it will be the first of the list)
-    const transferContractAddress = schedule[0]
+    const transferContractAddress = timetable[0]
 
     // Get the price of the transfer and 
     const actualPrice = await busContract.methods.getPrice(transferContractAddress).call()

@@ -15,7 +15,7 @@ contract TransferBus {
     uint8 private _seats;  // Number of seats
 
     mapping(address => uint256) private _price;
-    address[] private _schedule;
+    address[] private _timetable;
 
     /**
      * @dev Emitted when listing transfer from `origin` to `destination` 
@@ -44,7 +44,7 @@ contract TransferBus {
         require(seats <= _seats, "Not allowed to list more seats than supported by the bus");
 
         TransferToken transfer = new TransferToken(datetime, origin, destination, seats);
-        _schedule.push(address(transfer));
+        _timetable.push(address(transfer));
         _price[address(transfer)] = price;
 
         emit TransferListed(datetime, origin, destination);
@@ -58,11 +58,15 @@ contract TransferBus {
         TransferToken(schedule).transfer(msg.sender, units);
     }
 
-    function getSchedule() public view returns (address[] memory) {
-        return _schedule;
+    function getTimetable() public view returns (address[] memory) {
+        return _timetable;
     }
 
     function getPrice(address transfer) public view returns (uint256) {
         return _price[transfer];
+    }
+
+    function getSummary() public view returns (string memory, string memory, string memory, uint256) {
+        return (_make, _model, _plate, _seats);
     }
 }
