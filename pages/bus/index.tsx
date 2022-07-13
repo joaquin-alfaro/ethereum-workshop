@@ -1,13 +1,15 @@
 import { NextPage } from 'next'
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Spinner } from 'react-bootstrap'
 import Layout from '../../components/layout'
 import { useRouter } from 'next/router'
 import TransferBusContract from '../../src/domain/TransferBusContract'
+import Notification from '../../components/notification'
 
 const Bus: NextPage = () => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
+    const [address, setAddress] = useState<string>()
 
     const handleOnCreate = async (e: any) => {
         e.preventDefault()
@@ -20,6 +22,7 @@ const Bus: NextPage = () => {
                 seats: e.target.seats.value
             })
             console.log('Smart contract created', transferBusContract.getContract().options.address)
+            setAddress(transferBusContract.getContract().options.address)
         } finally {
             setLoading(false)
         }
@@ -48,9 +51,25 @@ const Bus: NextPage = () => {
                                 <Form.Group className="mb-3" controlId="seats" style={{width: '8rem'}}>
                                     <Form.Control type="number" placeholder="Seats..." size='lg'/>
                                 </Form.Group>
-                                <Button variant="primary" type="submit" size='lg' disabled={loading}>
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    size='lg'
+                                    disabled={loading}
+                                >
                                     Create
+                                    {loading && 
+                                    <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        className="ms-2"
+                                    />
+                                    }
                                 </Button>
+                                <Notification address={address} />
                             </Form>
                         </div>
                     </div>           

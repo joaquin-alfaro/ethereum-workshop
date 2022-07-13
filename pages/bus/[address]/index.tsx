@@ -159,19 +159,21 @@ const BusDetail = ({address}: ServerSideReturnType) => {
           <div className='mt-4'>
             <h4>Timetable</h4>
             <div className='row'>
-              <div className='col'>
-                {timetable.map((transfer, index) => 
-                <TransferDate 
-                  key={index}
-                  datetime={formatDate(transfer.datetime)}
-                  origin={transfer.origin}
-                  destination={transfer.destination}
-                  price={Web3.utils.fromWei(String(transfer.price), 'ether')}
-                  units={transfer.units}
-                  onBuy={() => {handleOnBuy(transfer.price, transfer.address)}}
-                />
-                )}
-              </div>
+              {timetable.length > 0 && 
+                <div className='col'>
+                  {timetable.map((transfer, index) => 
+                  <TransferDate 
+                    key={index}
+                    datetime={formatDate(transfer.datetime)}
+                    origin={transfer.origin}
+                    destination={transfer.destination}
+                    price={Web3.utils.fromWei(String(transfer.price), 'ether')}
+                    units={transfer.units}
+                    onBuy={() => {handleOnBuy(transfer.price, transfer.address)}}
+                  />
+                  )}
+                </div>
+              }
               <div className='col'>
                 <FormAddTransfer onSubmit={handleOnAddTransfer}/>
               </div>
