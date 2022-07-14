@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from 'next'
 import { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import Layout from '../../../components/layout'
+import Event from '../../../components/event'
 import TransferBusContract from '../../../src/domain/TransferBusContract'
 import { BusDetail, Transfer } from '../../../src/domain/types'
 import { formatDate, parseDate } from '../../../src/utils/date'
@@ -95,7 +96,8 @@ const BusDetail = ({address}: ServerSideReturnType) => {
   const [transferBus, setTransferBus] = useState<TransferBusContract>()
   const [busDetail, setBusDetail] = useState<BusDetail>()
   const [timetable, setTimetable] = useState<Array<Transfer>>([])
-  
+  const [eventTransferListed, setEventTransferListed] = useState<any>()
+
   const handleOnAddTransfer = async (e: any) => {
     if (!transferBus) return
 
@@ -123,62 +125,79 @@ const BusDetail = ({address}: ServerSideReturnType) => {
   useEffect(()=> {
     if (!transferBus) return
 
+    // Get summary of the contract
     transferBus
       .getSummary()
       .then(response => setBusDetail(response))
 
+    // Get timetable
     transferBus
       .getTimetable()
       .then(response => setTimetable(response))
+
+    // Subscribe to events
+    transferBus.subscribeTransferEvent({callback: data => {
+      setEventTransferListed(data)
+    }})
+
   }, [transferBus])
 
   return (
       <Layout>
-          {!busDetail && 
-            <div className="alert alert-danger" role="alert">
-              Missing smart contract for address <span className='text-muted'>{address}</span>
-            </div>
-          }
-          <div className="card w-75" >
-            <div className="card-header">
-              <h4>Bus {busDetail?.plate}</h4>
-              <h6 className="card-subtitle mb-2 text-muted">{address}</h6>
-            </div>
-            <div className="card-body">
-              <h5 className="card-title">Make</h5>
-              <h6 className="card-subtitle mb-2 text-muted">{busDetail?.make}</h6>
-              <h5 className="card-title">Model</h5>
-              <h6 className="card-subtitle mb-2 text-muted">{busDetail?.model}</h6>
-              <h5 className="card-title">License plate</h5>
-              <h6 className="card-subtitle mb-2 text-muted">{busDetail?.plate}</h6>
-              <h5 className="card-title">Number of seats</h5>
-              <h6 className="card-subtitle mb-2 text-muted">{busDetail?.seats}</h6>
-            </div>
+        {eventTransferListed && 
+          <Event>
+            <>
+              <p className='my-0'><strong>Datetime:</strong> {formatDate(eventTransferListed.datetime)}</p>
+              <p className='my-0'><strong>Origin</strong>: {eventTransferListed.origin}</p>
+              <p className='my-0'><strong>Destination</strong>: {eventTransferListed.destination}</p>
+            </>
+          </Event>
+        }
+        {!busDetail && 
+          <div className="alert alert-danger" role="alert">
+            Missing smart contract for address <span className='text-muted'>{address}</span>
           </div>
+        }
+        <div className="card w-75" >
+          <div className="card-header">
+            <h4>Bus {busDetail?.plate}</h4>
+            <h6 className="card-subtitle mb-2 text-muted">{address}</h6>
+          </div>
+          <div className="card-body">
+            <h5 className="card-title">Make</h5>
+            <h6 className="card-subtitle mb-2 text-muted">{busDetail?.make}</h6>
+            <h5 className="card-title">Model</h5>
+            <h6 className="card-subtitle mb-2 text-muted">{busDetail?.model}</h6>
+            <h5 className="card-title">License plate</h5>
+            <h6 className="card-subtitle mb-2 text-muted">{busDetail?.plate}</h6>
+            <h5 className="card-title">Number of seats</h5>
+            <h6 className="card-subtitle mb-2 text-muted">{busDetail?.seats}</h6>
+          </div>
+        </div>
 
-          <div className='mt-4'>
-            <h4>Timetable</h4>
-            <div className='row'>
-              {timetable.length > 0 && 
-                <div className='col'>
-                  {timetable.map((transfer, index) => 
-                  <TransferDate 
-                    key={index}
-                    datetime={formatDate(transfer.datetime)}
-                    origin={transfer.origin}
-                    destination={transfer.destination}
-                    price={Web3.utils.fromWei(String(transfer.price), 'ether')}
-                    units={transfer.units}
-                    onBuy={() => {handleOnBuy(transfer.price, transfer.address)}}
-                  />
-                  )}
-                </div>
-              }
+        <div className='mt-4'>
+          <h4>Timetable</h4>
+          <div className='row'>
+            {timetable.length > 0 && 
               <div className='col'>
-                <FormAddTransfer onSubmit={handleOnAddTransfer}/>
+                {timetable.map((transfer, index) => 
+                <TransferDate 
+                  key={index}
+                  datetime={formatDate(transfer.datetime)}
+                  origin={transfer.origin}
+                  destination={transfer.destination}
+                  price={Web3.utils.fromWei(String(transfer.price), 'ether')}
+                  units={transfer.units}
+                  onBuy={() => {handleOnBuy(transfer.price, transfer.address)}}
+                />
+                )}
               </div>
+            }
+            <div className='col'>
+              <FormAddTransfer onSubmit={handleOnAddTransfer}/>
             </div>
           </div>
+        </div>
       </Layout>
   )
 }

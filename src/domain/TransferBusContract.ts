@@ -75,6 +75,26 @@ class TransferBusContract {
       return result
     }
 
+    subscribeTransferEvent({fromBlock = 0, callback}: {fromBlock?: number, callback: (data: any) => void}) {
+      const mapAndCallback = (callbackFunction: (e: any) => void) => (event: any) => {
+        const data = {
+          datetime: event.returnValues.datetime,
+          destination: event.returnValues.destination,
+          origin: event.returnValues.origin
+        }
+        callbackFunction(data)
+      }
+      this.subscribeEvent({fromBlock, event: 'TransferListed', callback: mapAndCallback(callback)})
+    }
+
+    subscribeEvent({fromBlock = 0, event, callback}: {fromBlock?: number, event: string, callback: (data: any) => void}) {
+      this.contract.events[event]({
+        fromBlock
+      }).on('data', (event: any) => { 
+        callback(event)
+      })
+    }
+
     static async create({
         make,
         model,
